@@ -1,0 +1,68 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/batch
+    username: batchuser
+    password: 1234
+    driver-class-name: org.mariadb.jdbc.Driver
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: always
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+logging:
+  level:
+    root: info
+
+server:
+  port: 8080
+
+
+
+resilience4j:
+  retry:
+    configs:
+      default:
+        maxRetryAttempts: 3 # 최대 재시도 수
+        waitDuration: 5000  # 재시도 사이에 고정된 시간 [ms]
+        #retryExceptions:
+        #  - org.springframework.web.client.HttpServerErrorException
+        #  - java.io.IOException
+        #ignoreExceptions:
+        #  - java.util.NoSuchElementException
+    instances:
+      retry-test-3000: # retry name
+        baseConfig: default # 기본 config 지정 (Ex-retry.configs.{default})
+        waitDuration: 3000
+      retry-db-select-4000:
+        baseConfig: default
+        waitDuration: 4000
+      retry-db-select-5000:
+        baseConfig: default
+        waitDuration: 5000
+  circuitbreaker:
+    configs:
+      default:  # 기본 config 명
+        registerHealthIndicator: true
+        slidingWindowType: TIME_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 10  # 최소한 호출을 10번을 기록해야 실패 비율을 계산할 수 있다.
+        slowCallRateThreshold: 100
+        slowCallDurationThreshold: 60000
+        failureRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 10
+        waitDurationInOpenState: 10s  # 서킷의 상태가 Open 에서 Half-open 으로 변경되기전에 Circuit Break가 기다리는 시간 [s]
+    instances:
+      circuit-test-70000: # circuitbreaker name
+        baseConfig: default # 기본 config 지정 (Ex-circuitbreaker.configs.{default})
+        slowCallDurationThreshold: 70000 # 응답시간이 느린것으로 판단할 기준 시간 [ms]
+      circuit-db-select-200:
+        baseConfig: default
+        slowCallDurationThreshold: 200
+      circuit-db-select-300:
+        baseConfig: default
+        slowCallDurationThreshold: 300
