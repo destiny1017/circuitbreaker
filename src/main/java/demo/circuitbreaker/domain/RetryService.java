@@ -12,7 +12,7 @@ public class RetryService {
 
     @Retry(name= Resilience4jCode.RETRY_TEST_3000, fallbackMethod = "callExternalApiFallBack")
     public String callExternalApi() {
-        log.info("execute callExternalApi..");
+        log.info("execute RetryService.callExternalApi()..");
         return WebClient.create("http://localhost:8082")
                 .get()
                 .uri("/external-api")
@@ -23,6 +23,6 @@ public class RetryService {
 
     public String callExternalApiFallBack(Throwable t) {
         log.info("throwable = ", t.getLocalizedMessage());
-        return "fallback call";
+        return "retry fallback call";
     }
 }

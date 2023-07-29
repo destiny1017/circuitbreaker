@@ -48,12 +48,12 @@ resilience4j:
     configs:
       default:  # 기본 config 명
         registerHealthIndicator: true
-        slidingWindowType: TIME_BASED
-        slidingWindowSize: 10
+        slidingWindowType: TIME_BASED # 분석 기준 데이터 TIME_BASED / COUNT_BASED
+        slidingWindowSize: 100 # 100초동안의 데이터를 기준으로 판단
         minimumNumberOfCalls: 10  # 최소한 호출을 10번을 기록해야 실패 비율을 계산할 수 있다.
-        slowCallRateThreshold: 100
-        slowCallDurationThreshold: 60000
-        failureRateThreshold: 50
+        slowCallRateThreshold: 70 # slowCall 상태라고 판단할 기준 비율, 70%
+        slowCallDurationThreshold: 20000 # slowCall 판단 기준 시간, 20초
+        failureRateThreshold: 50 # 실패상태로 판단할 비율, 50%
         permittedNumberOfCallsInHalfOpenState: 10
         waitDurationInOpenState: 10s  # 서킷의 상태가 Open 에서 Half-open 으로 변경되기전에 Circuit Break가 기다리는 시간 [s]
     instances:
@@ -66,3 +66,6 @@ resilience4j:
       circuit-db-select-300:
         baseConfig: default
         slowCallDurationThreshold: 300
+      circuit-api-call-3000:
+        baseConfig: default
+        slowCallDurationThreshold: 2000
