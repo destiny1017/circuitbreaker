@@ -3,14 +3,19 @@ package demo.circuitbreaker.domain;
 import demo.circuitbreaker.data.TrafficResponse;
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class RoadTraffic {
+
+    @Id
+    private Long id;
     private String exDivCode;
     private String exDivName;
     private String tcsType;
@@ -18,7 +23,7 @@ public class RoadTraffic {
     private String tmType;
     private String tmName;
     private String carType;
-    private String trafficAmout;
+    private String trafficAmount;
     private String sumTm;
     private LocalDateTime createdDateTime;
 

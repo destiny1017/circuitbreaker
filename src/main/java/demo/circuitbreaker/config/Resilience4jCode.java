@@ -9,4 +9,5 @@ public final class Resilience4jCode {
     public static final String CIRCUIT_DB_SELECT_200 = "circuit-db-select-200";
     public static final String CIRCUIT_DB_SELECT_300 = "circuit-db-select-300";
     public static final String CIRCUIT_API_CALL_3000 = "circuit-api-call-3000";
+    public static final String CIRCUIT_API_CALL_300 = "circuit-api-call-300";
 }

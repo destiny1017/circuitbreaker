@@ -28,7 +28,7 @@ public class TrafficResponse {
         this.tmType = roadTraffic.getTmType();
         this.tmName = roadTraffic.getTmName();
         this.carType = roadTraffic.getCarType();
-        this.trafficAmout = roadTraffic.getTrafficAmout();
+        this.trafficAmout = roadTraffic.getTrafficAmount();
         this.sumTm = roadTraffic.getSumTm();
         this.createdDateTime = roadTraffic.getCreatedDateTime();
     }
