@@ -11,7 +11,7 @@ public class CustomBeanConfig {
 
     @Bean
     public WebClient trafficWebClient() {
-        return WebClient.create("http://data.ex.co.kr");
+        return WebClient.create("http://localhost:8082");
     }
 
     @Bean

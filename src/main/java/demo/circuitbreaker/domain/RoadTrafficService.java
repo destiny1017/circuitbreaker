@@ -24,7 +24,7 @@ public class RoadTrafficService {
     public List<TrafficResponse> getTrafficInfo() {
         log.info("getTrafficInfo()");
         TrafficAllVo trafficAll = webClient.get()
-                .uri("/openapi/trafficapi/trafficAll?key=test&type=json&exDivCode=00&tcsType=1&tmType=1")
+                .uri("/getRoadTraffic")
                 .retrieve()
                 .bodyToMono(TrafficAllVo.class)
                 .block();
@@ -33,6 +33,7 @@ public class RoadTrafficService {
     }
 
     public List<TrafficResponse> getTrafficInfoDb(Throwable t) {
+        t.printStackTrace();
         log.info("getTrafficInfoDb()");
         List<RoadTraffic> trafficAll = roadTrafficRepository.findAllByExDivCodeAndTcsTypeOrderByCreatedDateTimeDesc("00", "1");
         return trafficAll.stream().map(TrafficResponse::new)
